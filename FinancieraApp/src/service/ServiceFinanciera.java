@@ -16,7 +16,8 @@ public class ServiceFinanciera {
     private final Scanner LEER = new Scanner(System.in).useDelimiter("\n");
 
     /**
-     *Metodo crea la persona con sus atributos
+     * Metodo crea la persona con sus atributos
+     *
      * @return Objeto de tipo Persona
      */
     public final Persona crearPersonaBanco() {
@@ -66,6 +67,7 @@ public class ServiceFinanciera {
 
     /**
      * metodo ingresa saldo a la cuenta
+     *
      * @param cliente recibe un arraylist con objeto de tipo persona
      */
     public final void saldoIngresar(ArrayList<Persona> cliente) {
@@ -111,7 +113,8 @@ public class ServiceFinanciera {
     }
 
     /**
-     *Metodo asigna credito para el cliente
+     * Metodo asigna credito para el cliente
+     *
      * @param cliente recibe arraylist con objeto persona
      */
     public final void creditoPersonal(ArrayList<Persona> cliente) {
@@ -143,20 +146,9 @@ public class ServiceFinanciera {
                             aux = false;
                         } else {
                             if (porcentajeCredido >= 100000) {
-                                System.out.println("Credito Aprobado - Puede acceder hasta $50000");
-                                System.out.println("3 Cuotas de $20000");
-                                System.out.println("6 Cuotas de $25000");
-                                System.out.println("12 Cuotas de $30000");
 
-                                System.out.println("Cantidad de coutas:");
-                                int coutas = Leer.nextInt();
-                                System.out.println("Ingresa el valor del credito:");
-                                nuevoSaldo = Leer.nextInt();
+                                creditoCuotas.cuotasCantidad(p);
 
-                                p.setFecha(validacionFecha.fecha());
-                                p.setCredito(true);
-
-                                p.setSaldo((p.getSaldo() + nuevoSaldo));
                                 aux = false;
 
                             } else {
@@ -185,7 +177,8 @@ public class ServiceFinanciera {
     }
 
     /**
-     *Metodo resta saldo en la cuenta del cliente
+     * Metodo resta saldo en la cuenta del cliente
+     *
      * @param cliente recibe arraylist con objeto persona
      */
     public final void saldoRestar(ArrayList<Persona> cliente) {
@@ -229,7 +222,8 @@ public class ServiceFinanciera {
     }
 
     /**
-     *Metodo muestra lista del  cliente segun el dni
+     * Metodo muestra lista del cliente segun el dni
+     *
      * @param cliente recibe arraylist con objeto persona
      */
     public final void buscar(ArrayList<Persona> cliente) {
@@ -238,11 +232,14 @@ public class ServiceFinanciera {
         System.out.println("Ingresa el DNI del cliente:");
         int dni = Leer.nextInt();
         listaClientes.buscarClienteDni(cliente, dni);
+        System.out.println("======================");
+       
 
     }
 
     /**
-     *Metodo muestra lista del cliente por apellido.
+     * Metodo muestra lista del cliente por apellido.
+     *
      * @param cliente recibe arraylist con objeto persona.
      */
     public final void buscarPorApellido(ArrayList<Persona> cliente) {

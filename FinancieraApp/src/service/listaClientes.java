@@ -26,7 +26,7 @@ public class listaClientes {
         for (Persona persona : cliente) {
             System.out.println("Apellido y Nombre: " + persona.getApellido() + " "
                     + persona.getNombre() + "\n" + "DNI: " + persona.getDni() + "\n"
-                    + "Numero de cuenta: " + persona.getnCuenta() + "\n"+"Credito: "+persona.isCredito()+"\n");
+                    + "Numero de cuenta: " + persona.getnCuenta() + "\n"+"Credito: "+persona.isCredito()+"\n"+"Saldo: $"+persona.getSaldo());
             if(persona.isCredito()==true){
                 System.out.println("Fecha del credito:"+validacionFecha.fechaFormat(cliente, persona));
             }
