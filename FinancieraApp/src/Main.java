@@ -22,14 +22,14 @@ public class Main {
         ArrayList<Persona> ar = new ArrayList();
 
         ServiceFinanciera sf = new ServiceFinanciera();
-        boolean aux = true;
+        
+        boolean aux = false;
         do {
 
             switch (validacionMenu.confirmacionMenu()) {
 
                 case 1:
                     ar.add(sf.crearPersonaBanco());
-
                     break;
 
                 case 2:
@@ -54,11 +54,11 @@ public class Main {
 
                 case 7:
                     System.out.println("Cerrando programa...");
-                    aux = false;
+                    
                     break;
 
             }
-        } while (aux);
+        } while (!aux);
 
     }
 

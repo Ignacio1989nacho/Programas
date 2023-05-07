@@ -21,6 +21,7 @@ public class validacionMenu {
     public static final int confirmacionMenu() {
         int op = 0;
         Scanner LEER = new Scanner(System.in).useDelimiter("\n");
+       do{
         try {
 
             while (op != 1 && op != 2 && op != 3 && op != 4 && op != 5 && op != 6) {
@@ -31,6 +32,7 @@ public class validacionMenu {
                 System.out.println("");
                 
             }
+            break;
         } catch (InputMismatchException e) {
             System.out.println("");
 
@@ -43,6 +45,7 @@ public class validacionMenu {
             LEER.nextLine(); // Limpiar el buffer del scanner}
 
         }
+       }while(true);
         return op;
 
     }

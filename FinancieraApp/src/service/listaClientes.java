@@ -26,7 +26,10 @@ public class listaClientes {
         for (Persona persona : cliente) {
             System.out.println("Apellido y Nombre: " + persona.getApellido() + " "
                     + persona.getNombre() + "\n" + "DNI: " + persona.getDni() + "\n"
-                    + "Numero de cuenta: " + persona.getnCuenta() + "\n");
+                    + "Numero de cuenta: " + persona.getnCuenta() + "\n"+"Credito: "+persona.isCredito()+"\n");
+            if(persona.isCredito()==true){
+                System.out.println("Fecha del credito:"+validacionFecha.fechaFormat(cliente, persona));
+            }
         }
 
     }
@@ -45,10 +48,15 @@ public class listaClientes {
             Persona p = cl.next();
 
             if (Objects.equals(p.getDni(), dni)) {
-
+                System.out.println("=========================================");
                 System.out.println("Apellido y Nombre: " + p.getApellido() + " "
                         + p.getNombre() + "\n" + "DNI: " + p.getDni() + "\n"
-                        + "Numero de cuenta: " + p.getnCuenta() + "\n");
+                        + "Numero de cuenta: " + p.getnCuenta() + "\n"+
+                        "Credito: "+p.isCredito());
+                if(p.isCredito()==true){
+                 System.out.println("Fecha del credito: "+validacionFecha.fechaFormat(cliente, p)+"\n");
+                }
+                System.out.println("=========================================");
             }
             
             else{

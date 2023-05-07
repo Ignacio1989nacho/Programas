@@ -74,7 +74,7 @@ public class ServiceFinanciera {
         boolean aux = true;
         do {
             listaClientes.mostrarListas(cliente);
-            System.out.println("Seleccione el numero de cuenta para restarle el saldo:");
+            System.out.println("Seleccione el numero de cuenta para sumarle saldo:");
             try {
 
                 String nCuenta = Leer.next();
