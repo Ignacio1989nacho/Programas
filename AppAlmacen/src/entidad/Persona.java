@@ -8,7 +8,7 @@ package entidad;
 import java.util.Objects;
 
 
-public class Empleado {
+public class Persona {
     
     private String usuario ;
     private String contra;
@@ -16,11 +16,11 @@ public class Empleado {
    
    
 
-    public Empleado() {
+    public Persona() {
     }
 
 
-    public Empleado(String usuario, String contra) {
+    public Persona(String usuario, String contra) {
         this.usuario = usuario;
         this.contra = contra;
         
@@ -72,7 +72,7 @@ public class Empleado {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Empleado other = (Empleado) obj;
+        final Persona other = (Persona) obj;
         if (!Objects.equals(this.usuario, other.usuario)) {
             return false;
         }

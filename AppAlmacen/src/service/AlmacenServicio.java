@@ -11,7 +11,7 @@ Realizar un menú para lograr todas las acciones previamente mencionadas.
 package service;
 
 import comparator.comparadorUsuarios;
-import entidad.Empleado;
+import entidad.Persona;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -24,7 +24,7 @@ import java.util.Scanner;
 public class AlmacenServicio {
 
     private HashMap<String, Double> PRODUCTOMAP = new HashMap();
-    private HashSet<Empleado> empleadoUsuarios = new HashSet();
+    private HashSet<Persona> empleadoUsuarios = new HashSet();
     private final Scanner LEER = new Scanner(System.in).useDelimiter("\n");
 
     /*
@@ -70,9 +70,10 @@ public class AlmacenServicio {
             }
         } while (true);
     }
+
     /*   
     *Metodo elimina el producto de la lista
-    */
+     */
     private void eliminarProducto() {
         do {
             try {
@@ -90,26 +91,36 @@ public class AlmacenServicio {
             }
         } while (true);
     }
-/*
+
+    /*
  *Metodo muestra la lista de productos
- */
+     */
     private void mostrarProductos() {
+        System.out.println("");
+        System.out.println("==========================================");
         for (Map.Entry<String, Double> object : PRODUCTOMAP.entrySet()) {
             System.out.println("Producto: " + object.getKey() + "\n" + "Valor: $" + object.getValue());
         }
+        System.out.println("==========================================");
+        System.out.println("");
     }
-/*
+
+    /*
 *Metodo busca producto ingresado por el usuario y si se encuentra lo muestra en la lista.
- */
+     */
     private void buscarProducto() {
         do {
             try {
                 System.out.println("Ingresa el producto que deseas buscar:");
                 String producto = LEER.next();
                 if (PRODUCTOMAP.containsKey(producto)) {
+                    System.out.println("");
+                    System.out.println("==========================================");
                     for (Map.Entry<String, Double> object : PRODUCTOMAP.entrySet()) {//MODIFICAR BUCLE//
                         System.out.println("Producto: " + object.getKey() + "\n" + "Precio: $" + object.getValue());
                     }
+                    System.out.println("==========================================");
+                    System.out.println("");
                 } else {
                     System.out.println("el producto no se encuentra en el stock!!!");
                 }
@@ -119,32 +130,34 @@ public class AlmacenServicio {
             }
         } while (true);
     }
-/*
+
+    /*
  * Metodo crea el usuario y lo guarda en el hashset
- */
+     */
     private void crearUsuario() {
         System.out.println("Usuario");
         String us = LEER.next();
         System.out.println("Contraseña");
         String pass = LEER.next();
-        Empleado emp = new Empleado(us, pass);
+        Persona emp = new Persona(us, pass);
         empleadoUsuarios.add(emp);
     }
-/*
+
+    /*
 *Metodo elimina el usuario de la lista.
-*/
+     */
     private void eliminarUsuario() {
-        ArrayList<Empleado> comp = new ArrayList<>(empleadoUsuarios);
+        ArrayList<Persona> comp = new ArrayList<>(empleadoUsuarios);
         Collections.sort(comp, comparadorUsuarios.ordenarUsuarios);
-        for (Empleado empleado : comp) {
+        for (Persona empleado : comp) {
             System.out.println("Usuario: " + empleado.getUsuario());
         }
         System.out.println("Usuario que deseas eliminar:");
         String us = LEER.next();
-        Iterator<Empleado> it = comp.iterator();
+        Iterator<Persona> it = comp.iterator();
         boolean bandera = false;
         while (it.hasNext()) {
-            Empleado emp = it.next();
+            Persona emp = it.next();
             if (emp.getUsuario().equalsIgnoreCase(us)) {
                 bandera = true;
                 empleadoUsuarios.remove(emp);
@@ -157,9 +170,10 @@ public class AlmacenServicio {
             System.out.println("Usuario: " + empleado.getUsuario());
         });
     }
-/*
+
+    /*
 *Metodo muestra el menu al administrador. con sus opciones
-*/
+     */
     private void menuAdministrador() {
         int op = 0;
         op = opMenuAdm();
@@ -171,13 +185,30 @@ public class AlmacenServicio {
                 eliminarUsuario();
                 break;
             case 3:
+                crearProducto();
+                break;
+            case 4:
+                modificarPrecio();
+                break;
+            case 5:
+                eliminarProducto();
+                break;
+            case 6:
+                mostrarProductos();
+                break;
+            case 7:
+                buscarProducto();
+                break;
+            case 8:
                 System.out.println("saliendo del menu....");
                 break;
         }
+
     }
-/*
+
+    /*
 * Metodo para logear usuario
-*/
+     */
     private boolean ingresoUsuarioEmpleado() {
         boolean aux = false;
         int cont = 0;
@@ -186,13 +217,13 @@ public class AlmacenServicio {
             String us = LEER.next();
             System.out.println("CONTRASEÑA:");
             String pass = LEER.next();
-            Iterator<Empleado> it = empleadoUsuarios.iterator();
+            Iterator<Persona> it = empleadoUsuarios.iterator();
             while (it.hasNext()) {
-                Empleado emp = it.next();
+                Persona emp = it.next();
                 if (emp.getUsuario().equalsIgnoreCase(us) && emp.getContra().equalsIgnoreCase(pass)) {
                     aux = true;
                 }
-                break;
+                //break;
             }
             cont++;
             if (cont == 3) {
@@ -202,14 +233,16 @@ public class AlmacenServicio {
         return aux;
 
     }
-/*
+
+    /*
 * Metodo muestra las opciones del administrador.
-*/
+     */
     private int opMenuAdm() {
         int op = 0;
         do {
             try {
-                System.out.println("1 - Crear usuario\n" + "2 - Eliminar usuario\n" + "3 - Salir");
+                System.out.println("1 - Crear usuario\n" + "2 - Eliminar usuario\n" + "3 - Ingresar producto\n" + "4 - Modificar producto\n"
+                        + "5 - Eliminar producto\n" + "6 - Mostrar Lista\n" + "7 - Buscar producto\n" + "8 - Salir");
                 op = LEER.nextInt();
             } catch (InputMismatchException e) {
                 System.out.println("Seleccion incorrecta...");
@@ -219,9 +252,10 @@ public class AlmacenServicio {
         } while (true);
         return op;
     }
-/*
+
+    /*
 *Metodo para menu de seleccion, empleado o administrador
-*/
+     */
     private int opMenuAdmEmp() {
         int op = 0;
         while (op != 1 && op != 2) {
@@ -230,24 +264,25 @@ public class AlmacenServicio {
         }
         return op;
     }
-/**
- * Metodo de menu y seleccion para el empleado
- * @return retorna un entero
- */
+
+    /**
+     * Metodo de menu y seleccion para el empleado
+     *
+     * @return retorna un entero
+     */
     private int menuEmpleado() {
         int op = 0;
-        while (op != 1 && op != 2 && op != 3 && op != 4 && op != 5 && op != 6) {
-            System.out.println("Ingresa la opcion que deseas:\n" + "1 - Ingresar producto\n"
-                    + "2 - Modificar producto\n" + "3 - Eliminar producto\n"
-                    + "4 - Mostrar Lista\n" + "5 - Buscar producto\n" + "6 - Salir");
+        while (op != 1 && op != 2 && op != 3) {
+            System.out.println("Ingresa la opcion que deseas:\n"
+                    + "1 - Mostrar Lista\n" + "2 - Buscar producto\n" + "3 - Salir");
             op = LEER.nextInt();
         }
         return op;
     }
-/*
+
+    /*
  *Metodo menu general, con opciones llamando a los distintos metodos del servicio.
- */
-    
+     */
     public void menu() {
         do {
             try {
@@ -272,21 +307,12 @@ public class AlmacenServicio {
             try {
                 switch (menuEmpleado()) {
                     case 1:
-                        crearProducto();
-                        break;
-                    case 2:
-                        modificarPrecio();
-                        break;
-                    case 3:
-                        eliminarProducto();
-                        break;
-                    case 4:
                         mostrarProductos();
                         break;
-                    case 5:
+                    case 2:
                         buscarProducto();
                         break;
-                    case 6:
+                    case 3:
                         System.out.println("SALIENDO AL MENU LOGIN....");
                         menu();
                         break;

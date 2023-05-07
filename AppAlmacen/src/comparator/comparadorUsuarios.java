@@ -5,16 +5,16 @@
  */
 package comparator;
 
-import entidad.Empleado;
+import entidad.Persona;
 import java.util.Comparator;
 
 
 public class comparadorUsuarios {
 
-    public static Comparator<Empleado> ordenarUsuarios = new Comparator<Empleado>() {
+    public static Comparator<Persona> ordenarUsuarios = new Comparator<Persona>() {
 
         @Override
-        public int compare(Empleado p1, Empleado p2) {
+        public int compare(Persona p1, Persona p2) {
 
             return p1.getUsuario().compareTo(p2.getUsuario());
 
