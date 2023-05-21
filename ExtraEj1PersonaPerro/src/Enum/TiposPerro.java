@@ -1,0 +1,9 @@
+
+package Enum;
+
+
+public enum TiposPerro {
+    
+    DOBERMAN,BULLDOG,CANICHE,ROTWILLER,OVEJERO,BULLTERRIER,GALGO,DECALLE
+    
+}
