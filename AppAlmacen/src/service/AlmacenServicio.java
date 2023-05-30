@@ -10,6 +10,7 @@ Realizar un menú para lograr todas las acciones previamente mencionadas.
  */
 package service;
 
+import archivoBBDD.BBDD;
 import comparator.comparadorUsuarios;
 import entidad.Persona;
 import java.util.ArrayList;
@@ -21,54 +22,42 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
 
-public class AlmacenServicio {
-
-    private HashMap<String, Double> PRODUCTOMAP = new HashMap();
-    private HashSet<Persona> empleadoUsuarios = new HashSet();
+public class AlmacenServicio extends BBDD {
     private final Scanner LEER = new Scanner(System.in).useDelimiter("\n");
-
+    
     /*
     *Metodo crea el producto con su nombre y valor
      */
-    private void crearProducto() {
+    private void crearProducto() {     
+        String producto = "";
+        double precio = 0d;
         do {
             try {
                 System.out.println("Ingresa el producto:");
-                String producto = LEER.next();
+                producto = LEER.next();
                 System.out.println("Ingresa el precio del producto:");
-                double precio = LEER.nextDouble();
-                PRODUCTOMAP.put(producto, precio);
+                precio = LEER.nextDouble();
                 break;
             } catch (InputMismatchException e) {
                 System.out.println("El valor ingresado es incorrecto!!!!");
                 LEER.next();// LIMPIAR EL BUFFER...
             }
         } while (true);
+        String ruta = "C:\\Users\\Usuario\\Desktop\\BBDDclientes\\productosBBDD.txt";
+        super.ingresarDatos(ruta, producto, precio);
     }
 
     /*
     * Metodo modifica el valor del producto
      */
     private void modificarPrecio() {
-        do {
-            try {
-                System.out.println("Introduce el producto que quieres modificar el precio:");
-                String producto = LEER.next();
-                double precio;
-                if (PRODUCTOMAP.containsKey(producto)) {
-                    System.out.println("Ingresa el nuevo valor del producto:");
-                    precio = LEER.nextDouble();
-                    PRODUCTOMAP.put(producto, precio);
-                } else {
-                    System.out.println("el producto no se encuentra en la lista...");
-                }
-                break;
 
-            } catch (InputMismatchException e) {
-                System.out.println("El valor ingresado es incorrecto!!!!");
-                LEER.next();// LIMPIAR EL BUFFER...
-            }
-        } while (true);
+        System.out.println("Introduce el producto que quieres modificar el precio:");
+        String producto = LEER.next();
+        System.out.println("Ingresa el precio nuevo:");
+        double precio;
+        precio = LEER.nextDouble();
+        super.modificarProducto(producto, precio);
     }
 
     /*   
@@ -79,56 +68,31 @@ public class AlmacenServicio {
             try {
                 System.out.println("Introduce el producto que quieres eliminar");
                 String producto = LEER.next();
-                if (PRODUCTOMAP.containsKey(producto)) {
-                    PRODUCTOMAP.remove(producto);
-                } else {
-                    System.out.println("el producto no se encuentra en la lista...");
-                }
+                
                 break;
             } catch (InputMismatchException e) {
                 System.out.println("El valor ingresado es incorrecto!!!!");
                 LEER.next();// LIMPIAR EL BUFFER...
             }
-        } while (true);
+        } while (true);    
     }
-
+    
     /*
  *Metodo muestra la lista de productos
      */
     private void mostrarProductos() {
-        System.out.println("");
-        System.out.println("==========================================");
-        for (Map.Entry<String, Double> object : PRODUCTOMAP.entrySet()) {
-            System.out.println("Producto: " + object.getKey() + "\n" + "Valor: $" + object.getValue());
-        }
-        System.out.println("==========================================");
-        System.out.println("");
+        super.mostrarListaProductos();
     }
 
     /*
 *Metodo busca producto ingresado por el usuario y si se encuentra lo muestra en la lista.
      */
     private void buscarProducto() {
-        do {
-            try {
-                System.out.println("Ingresa el producto que deseas buscar:");
-                String producto = LEER.next();
-                if (PRODUCTOMAP.containsKey(producto)) {
-                    System.out.println("");
-                    System.out.println("==========================================");
-                    for (Map.Entry<String, Double> object : PRODUCTOMAP.entrySet()) {//MODIFICAR BUCLE//
-                        System.out.println("Producto: " + object.getKey() + "\n" + "Precio: $" + object.getValue());
-                    }
-                    System.out.println("==========================================");
-                    System.out.println("");
-                } else {
-                    System.out.println("el producto no se encuentra en el stock!!!");
-                }
-                break;
-            } catch (InputMismatchException e) {
-                System.out.println("El valor ingresado es incorrecto!!!");
-            }
-        } while (true);
+
+        System.out.println("Ingresa el producto que deseas buscar:");
+        String producto = LEER.next();
+        super.leerProductos(producto);
+
     }
 
     /*
@@ -140,35 +104,16 @@ public class AlmacenServicio {
         System.out.println("Contraseña");
         String pass = LEER.next();
         Persona emp = new Persona(us, pass);
-        empleadoUsuarios.add(emp);
+        super.crearBBDDusuarios(emp);
     }
 
     /*
 *Metodo elimina el usuario de la lista.
      */
     private void eliminarUsuario() {
-        ArrayList<Persona> comp = new ArrayList<>(empleadoUsuarios);
-        Collections.sort(comp, comparadorUsuarios.ordenarUsuarios);
-        for (Persona empleado : comp) {
-            System.out.println("Usuario: " + empleado.getUsuario());
-        }
-        System.out.println("Usuario que deseas eliminar:");
-        String us = LEER.next();
-        Iterator<Persona> it = comp.iterator();
-        boolean bandera = false;
-        while (it.hasNext()) {
-            Persona emp = it.next();
-            if (emp.getUsuario().equalsIgnoreCase(us)) {
-                bandera = true;
-                empleadoUsuarios.remove(emp);
-            }
-        }
-        if (!bandera) {
-            System.out.println("no se encontro el usuario...");
-        }
-        empleadoUsuarios.forEach((empleado) -> {
-            System.out.println("Usuario: " + empleado.getUsuario());
-        });
+        
+        System.out.println("Ingresa el usuario que deseas eliminar:");
+        String nombre = LEER.next();   
     }
 
     /*
@@ -203,7 +148,6 @@ public class AlmacenServicio {
                 System.out.println("saliendo del menu....");
                 break;
         }
-
     }
 
     /*
@@ -213,25 +157,18 @@ public class AlmacenServicio {
         boolean aux = false;
         int cont = 0;
         do {
+            cont++;
             System.out.println("USUARIO:");
             String us = LEER.next();
             System.out.println("CONTRASEÑA:");
             String pass = LEER.next();
-            Iterator<Persona> it = empleadoUsuarios.iterator();
-            while (it.hasNext()) {
-                Persona emp = it.next();
-                if (emp.getUsuario().equalsIgnoreCase(us) && emp.getContra().equalsIgnoreCase(pass)) {
-                    aux = true;
-                }
-                //break;
-            }
-            cont++;
-            if (cont == 3) {
+            aux = super.iniciarSecion(us, pass);
+
+            if (cont >= 4) {
                 menu();
             }
         } while (!aux);
         return aux;
-
     }
 
     /*
@@ -284,9 +221,12 @@ public class AlmacenServicio {
  *Metodo menu general, con opciones llamando a los distintos metodos del servicio.
      */
     public void menu() {
+
         do {
             try {
+
                 switch (opMenuAdmEmp()) {
+
                     case 1:
                         menuAdministrador();
                         menu();

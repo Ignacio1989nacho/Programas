@@ -12,7 +12,8 @@ public class AppAlmacen {
         
         as.menu();
 
-
     }
+    
+    
 
 }
